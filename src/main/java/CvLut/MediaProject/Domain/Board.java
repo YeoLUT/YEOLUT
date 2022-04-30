@@ -1,9 +1,7 @@
 package CvLut.MediaProject.Domain;
 
-import CvLut.MediaProject.Dto.BoardListDto;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.engine.spi.Mapping;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -36,7 +34,10 @@ public class Board extends BaseEntity {
     private char isDeleted;
     @Column
     private String lutFileUrl;
-
+    @Column
+    private String source;
+    @Column
+    private String description;
     @ManyToOne
     @JoinColumn(name = "userIdx")
 //    @JoinTable(

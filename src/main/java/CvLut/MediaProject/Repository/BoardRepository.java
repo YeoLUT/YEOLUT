@@ -2,15 +2,11 @@ package CvLut.MediaProject.Repository;
 
 import CvLut.MediaProject.Domain.Board;
 import CvLut.MediaProject.Dto.BoardListDto;
-import CvLut.MediaProject.Dto.BoardListInterface;
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import org.springframework.data.domain.Pageable;
-
-import java.util.List;
-import java.util.Map;
 
 public interface BoardRepository extends JpaRepository<Board, Long> {
 
@@ -24,5 +20,6 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
             "            LEFT JOIN board_like bl on bl.board_idx = b.board_idx and bl.is_like = true \n" +
             "            GROUP BY b.board_idx " +
             "            ORDER BY b.created_at DESC ", nativeQuery = true)
-    Page<BoardListInterface[]> getMainPageBoardList(Pageable pageable);
+    Page<BoardListDto[]> getMainPageBoardList(Pageable pageable);
+
 }
