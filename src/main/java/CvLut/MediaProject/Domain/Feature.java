@@ -1,5 +1,7 @@
 package CvLut.MediaProject.Domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,12 +20,14 @@ public class Feature {
     @Column
     private String featureName;
 
+    @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parentIdx")
     private Feature parentIdx;
-
+    @JsonManagedReference
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "parentIdx")
     private List<Feature> children;
+
 
     @OneToMany(mappedBy = "feature")
     private List<BoardFeature> boardFeatures = new ArrayList<>();
