@@ -1,13 +1,13 @@
 package CvLut.MediaProject.Dto;
 
 public interface BoardListDto {
-    Long getBord_idx();
+    Long getBordIdx();
     String getTitle();
-    Long getDownload_count();
-     String getCreated_at();
-     Long getUser_idx();
+    Long getDownloadCount();
+     String getCreatedAt();
+     Long getUserIdx();
      String getName();
-     String getLut_url();
-     String getProfile_image_url();
+     String getLutUrl();
+     String getProfileImageUrl();
      String getLikeCount();
 }
