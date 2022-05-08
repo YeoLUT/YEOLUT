@@ -26,7 +26,35 @@ dependencies {
 	runtimeOnly('mysql:mysql-connector-java')
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+	// slf4j , logback
+	implementation('org.slf4j:jcl-over-slf4j')
+	implementation('ch.qos.logback:logback-classic')
+
+
+	// Querydsl
+	implementation 'com.querydsl:querydsl-jpa'
+
+	annotationProcessor('org.projectlombok:lombok')
+
+	// Querydsl 쿼리 타입을 생성할 때 사용하는 라이브러리
+	annotationProcessor "com.querydsl:querydsl-apt:${dependencyManagement.importedProperties['querydsl.version']}:jpa"
+	// java.lang.NoClassDefFoundError(javax.annotation.Entity) 발생 대응
+	annotationProcessor "jakarta.persistence:jakarta.persistence-api"
+	// java.lang.NoClassDefFoundError(javax.annotation.Generated) 발생 대응
+	annotationProcessor "jakarta.annotation:jakarta.annotation-api"
+
 }
+// clean task 실행시 QClass 삭제
+clean {
+	delete file('src/main/generated') // 인텔리제이 Annotation processor 생성물 생성 위치
+}
+// QueryDSL
+//def querydslDir = "$buildDir/generated/querydsl"
+//sourceSets { main.java.srcDir querydslDir }
+//configurations { querydsl.extendsFrom compileClasspath }
+//configurations { querydsl.extendsFrom compileClasspath }
+
 
 tasks.named('test') {
 	useJUnitPlatform()
