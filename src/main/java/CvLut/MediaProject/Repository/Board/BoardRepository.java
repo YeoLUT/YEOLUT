@@ -9,7 +9,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.query.Param;
 
-public interface BoardRepository extends JpaRepository<Board, Long>, BoardCustomRepository {
+import java.util.List;
+
+public interface BoardRepository extends JpaRepository<Board, Long> {
 
 
 //    @Query(value = "select  b.board_idx as boardIdx, title,  download_count as downloadCount, b.created_at as createdAt, u.user_idx as userIdx," +
@@ -32,5 +34,5 @@ public interface BoardRepository extends JpaRepository<Board, Long>, BoardCustom
 //
 //            )
     //BoardDetailResponseDto getBoardDetail(@Param("boardIdx") Long boardIdx);
-
+   // Board findById(@Param("boardIdx") Long boardIdx);
 }

@@ -10,8 +10,8 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface BoardCustomRepository {
-    Page<BoardDto.BoardListDto[]> getMainPageBoardList(Pageable pageable);
-    BoardDetailResponseDto getBoardDetail(@Param("boardIdx") Long boardIdx);
-    List<Board> getBoard();
-}
+//public interface BoardCustomRepository {
+//    Page<BoardDto.BoardListDto[]> getMainPageBoardList(Pageable pageable);
+//    BoardDetailResponseDto getBoardDetail(@Param("boardIdx") Long boardIdx);
+//    List<Board> getBoard();
+//}
