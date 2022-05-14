@@ -2,8 +2,7 @@ package CvLut.MediaProject.Domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -12,7 +11,9 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Feature {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long featureIdx;

@@ -1,6 +1,5 @@
 package CvLut.MediaProject.Domain;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -10,6 +9,9 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class User extends BaseEntity {
     @Id @GeneratedValue(strategy =  GenerationType.IDENTITY)
     private Long userIdx;

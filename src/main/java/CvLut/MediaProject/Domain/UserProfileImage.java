@@ -1,8 +1,15 @@
 package CvLut.MediaProject.Domain;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 
 @Entity
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class UserProfileImage {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userProfileImageIdx;

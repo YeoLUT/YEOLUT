@@ -1,7 +1,6 @@
 package CvLut.MediaProject.Domain;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -10,6 +9,9 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class LutImage {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long LutImageIdx;

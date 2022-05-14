@@ -1,8 +1,15 @@
 package CvLut.MediaProject.Domain;
 
+import lombok.*;
+
 import javax.persistence.*;
 
 @Entity
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 public class BoardFeature {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long boardFeatureIdx;
