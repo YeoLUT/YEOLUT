@@ -25,6 +25,18 @@ springdoc:
     display-request-duration: true
   show-actuator: true
 
+# s3
+cloud:
+  aws:
+    credentials:
+      accessKey: AKIAW4MVDSOLE55M4R75
+      secretKey: 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
+    s3:
+      bucket: media-project-openlut
+    region:
+      static: ap-northeast-2
+    stack:
+      auto: false
 #  group-configs:
 #  - group: stores
 #    paths-to-match: /store/**

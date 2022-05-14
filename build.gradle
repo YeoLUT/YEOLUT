@@ -44,6 +44,9 @@ dependencies {
 	// java.lang.NoClassDefFoundError(javax.annotation.Generated) 발생 대응
 	annotationProcessor "jakarta.annotation:jakarta.annotation-api"
 
+	// s3
+	implementation('org.springframework.cloud:spring-cloud-starter-aws:2.0.1.RELEASE')
+
 }
 // clean task 실행시 QClass 삭제
 clean {
