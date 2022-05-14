@@ -1,10 +1,7 @@
 package CvLut.MediaProject.Dto;
 
 import com.querydsl.core.annotations.QueryProjection;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -46,7 +43,6 @@ public class BoardDto {
     @Getter
     @Setter
     public static class BoardListDto{
-
         @QueryProjection
         public BoardListDto(Long boardIdx, String title, Long downloadCount, Timestamp createdAt,
                             Long userIdx, String name, String lutUrl, String profileImageUrl,
@@ -74,16 +70,64 @@ public class BoardDto {
     }
     @Getter
     @Setter
-    public static class BoardDetailRes extends BoardDetailDto{
+    public static class BoardDetailResDto extends BoardDetailDto{
         private List<FeatureDto.DefaultFeature> featureList;
         @Builder
-        public BoardDetailRes(Long boardIdx, String title, Long downloadCount, Timestamp createdAt,
-                              String description, String source, Long userIdx, String name,
-                              String lutUrl, String profileImageUrl, Long likeCount, List<FeatureDto.DefaultFeature> featureList){
+        public BoardDetailResDto(Long boardIdx, String title, Long downloadCount, Timestamp createdAt,
+                                 String description, String source, Long userIdx, String name,
+                                 String lutUrl, String profileImageUrl, Long likeCount, List<FeatureDto.DefaultFeature> featureList){
             super( boardIdx,  title,  downloadCount,  createdAt,
                      description,  source,  userIdx,  name,
                      lutUrl,  profileImageUrl,  likeCount);
             this.featureList = featureList;
         }
     }
+//    @Getter
+//    @Setter
+//    @NoArgsConstructor
+//    @AllArgsConstructor
+//    public static class BoardDetailReq {
+//        private List<Long> featureIdxList;
+//        private String search;
+//    }
+
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class uploadBoardReqDto {
+        private String title;
+        private String description;
+        private String source;
+        private String lutFileUrl;
+        private String originImageUrl;
+        private String lutImageUrl;
+        private List<Long> featureIdxList;
+        private String search;
+    }
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    @Builder
+    public static class s3UploadFileResDto{
+        public s3UploadFileResDto(String url) {
+            this.url = url;
+        }
+        public static s3UploadFileResDto url(String url){
+            return s3UploadFileResDto.builder()
+                    .url(url)
+                    .build();
+        }
+        private String url;
+    }
+
+//    public static class uploadLutFileUrlRes{
+//
+//    }
+//    public static class uploadLutImageUrlRes{
+//
+//    }
+//    public static class uploadOriginImageUrlRes{
+//
+//    }
 }
