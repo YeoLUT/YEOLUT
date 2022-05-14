@@ -1,4 +1,4 @@
-package CvLut.MediaProject;
+package CvLut.MediaProject.Config;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.context.annotation.Bean;
