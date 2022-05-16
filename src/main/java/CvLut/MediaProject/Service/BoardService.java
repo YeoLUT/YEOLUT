@@ -1,6 +1,5 @@
 package CvLut.MediaProject.Service;
 
-import CvLut.MediaProject.Config.S3Upload;
 import CvLut.MediaProject.Domain.*;
 import CvLut.MediaProject.Dto.BoardDto;
 import CvLut.MediaProject.Dto.FeatureDto;
@@ -11,9 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -48,7 +45,7 @@ public class BoardService {
                 .likeCount(boardDetailDto.getLikeCount()).featureList(boardFeatureList).build();
     }
     @Transactional
-    public void insertBoard(BoardDto.uploadBoardReqDto uploadBoardReqDto ){
+    public void insertBoard(BoardDto.UploadBoardReqDto uploadBoardReqDto ){
         LutImage lutImage = LutImage.builder().lutUrl(uploadBoardReqDto.getLutImageUrl()).build();
         OriginImage originImage = OriginImage.builder().originImageUrl(uploadBoardReqDto.getOriginImageUrl()).build();
         Board board = Board.builder().title(uploadBoardReqDto.getTitle()).lutFileUrl(uploadBoardReqDto.getLutFileUrl())

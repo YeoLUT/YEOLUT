@@ -95,7 +95,7 @@ public class BoardDto {
     @Setter
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class uploadBoardReqDto {
+    public static class UploadBoardReqDto {
         private String title;
         private String description;
         private String source;
@@ -109,16 +109,32 @@ public class BoardDto {
     @Setter
     @NoArgsConstructor
     @Builder
-    public static class s3UploadFileResDto{
-        public s3UploadFileResDto(String url) {
+    public static class S3UploadFileResDto {
+        public S3UploadFileResDto(String url) {
             this.url = url;
         }
-        public static s3UploadFileResDto url(String url){
-            return s3UploadFileResDto.builder()
+        public static S3UploadFileResDto url(String url){
+            return S3UploadFileResDto.builder()
                     .url(url)
                     .build();
         }
         private String url;
+    }
+    @Getter
+    @Setter
+    public static class UserBoardList{
+        private Long boardIdx;
+
+        @QueryProjection
+        public UserBoardList(Long boardIdx, String title, String lutImage) {
+            this.boardIdx = boardIdx;
+            this.title = title;
+            this.lutImage = lutImage;
+        }
+
+        private String title;
+        private String lutImage;
+
     }
 
 //    public static class uploadLutFileUrlRes{

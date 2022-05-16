@@ -4,6 +4,7 @@ import CvLut.MediaProject.Domain.Board;
 import CvLut.MediaProject.Dto.BoardDto;
 import CvLut.MediaProject.Dto.QBoardDto_BoardDetailDto;
 import CvLut.MediaProject.Dto.QBoardDto_BoardListDto;
+import CvLut.MediaProject.Dto.QBoardDto_UserBoardList;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.QueryResults;
 import com.querydsl.core.types.Path;
@@ -89,5 +90,24 @@ public class BoardQueryRepository {
                 .leftJoin(board.boardLikes, boardLike).on(boardLike.isLike.eq(1))
                 .where(board.boardIdx.eq(boardIdx))
                 .fetch();
+    }
+    public List<BoardDto.UserBoardList> UserBoardList(Long userIdx){
+        return queryFactory.select(new QBoardDto_UserBoardList(board.boardIdx, board.title, lutImage.lutUrl))
+                .from(board)
+                .leftJoin(board.boardLutImages, boardLutImage)
+                .leftJoin(boardLutImage.lutImage, lutImage)
+                .where(board.user.userIdx.eq(userIdx)).fetch()
+                ;
+
+    }
+    public List<BoardDto.UserBoardList> UserLikeList(Long userIdx){
+        return queryFactory
+                .select(new QBoardDto_UserBoardList(board.boardIdx, board.title, lutImage.lutUrl))
+                .from(boardLike)
+                .leftJoin(boardLike.board, board)
+                .leftJoin(boardLutImage.board, board)
+                .leftJoin(boardLutImage.lutImage, lutImage)
+                .where(boardLike.user.userIdx.eq(userIdx))
+                .where(boardLike.isLike.eq(1)).fetch();
     }
 }
