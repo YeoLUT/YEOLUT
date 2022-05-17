@@ -32,19 +32,19 @@ public class UserController {
 //    }
     @Operation(summary = "추천 작가 조회 API", description = "유저, 게시글 관련 데이터")
     @GetMapping("/recommend")
-    public Page<UserRecommendedListDto[]> recommendedUserList(Pageable pageable){
-        return userRepository.recommendedUserList(pageable);
+    public BaseResponse<Page<UserRecommendedListDto[]>> recommendedUserList(Pageable pageable){
+        return BaseResponse.res(true, HttpStatus.OK, "Success", userRepository.recommendedUserList(pageable));
     }
 
     @Operation(summary = "유저 작성 게시글 목록", description = "")
     @GetMapping("{userIdx}/boards")
-    public BaseResponse<List<BoardDto.UserBoardList>> userBoardList(Long userIdx){
+    public BaseResponse<List<BoardDto.UserBoardList>> userBoardList(@PathVariable Long userIdx){
         return BaseResponse.res(true, HttpStatus.OK, "Success", boardQueryRepository.UserBoardList(userIdx));
     }
 
     @Operation(summary = "유저 좋아요 게시글 목록", description = "")
     @GetMapping("{userIdx}/likes")
-    public BaseResponse<List<BoardDto.UserBoardList>> userLikeList(Long userIdx){
+    public BaseResponse<List<BoardDto.UserBoardList>> userLikeList(@PathVariable Long userIdx){
         return BaseResponse.res(true, HttpStatus.OK, "Success", boardQueryRepository.UserLikeList(userIdx));
     }
 }

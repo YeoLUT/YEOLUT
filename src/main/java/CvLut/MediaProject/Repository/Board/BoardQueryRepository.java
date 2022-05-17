@@ -103,11 +103,10 @@ public class BoardQueryRepository {
     public List<BoardDto.UserBoardList> UserLikeList(Long userIdx){
         return queryFactory
                 .select(new QBoardDto_UserBoardList(board.boardIdx, board.title, lutImage.lutUrl))
-                .from(boardLike)
-                .leftJoin(boardLike.board, board)
-                .leftJoin(boardLutImage.board, board)
+                .from(board)
+                .leftJoin( board.boardLikes, boardLike).on(boardLike.user.userIdx.eq(userIdx), boardLike.isLike.eq(1))
+                .leftJoin(board.boardLutImages, boardLutImage)
                 .leftJoin(boardLutImage.lutImage, lutImage)
-                .where(boardLike.user.userIdx.eq(userIdx))
-                .where(boardLike.isLike.eq(1)).fetch();
+                .fetch();
     }
 }

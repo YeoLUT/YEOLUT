@@ -33,7 +33,7 @@ public class BoardController {
    // private final BaseResponse baseResponse;
     @Operation(summary = "게시글 목록 조회", description = "메인 페이지 게시글 목록")
     @GetMapping("/list")
-    public Page<BoardDto.BoardListDto> boardList(
+    public BaseResponse<Page<BoardDto.BoardListDto>> boardList(
             @PageableDefault(size = 12, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable,
             @RequestParam(required = false) String search,
     @RequestParam(required = false) List<Long> featureIdxList){
@@ -41,12 +41,12 @@ public class BoardController {
             featureIdxList = new ArrayList<>();
         }
 
-        return boardQueryRepository.BoardSearch(pageable, featureIdxList, search);
+        return BaseResponse.res(true, HttpStatus.OK, "Success", boardQueryRepository.BoardSearch(pageable, featureIdxList, search));
     }
     @Operation(summary = "게시글 상세 조회", description = "특정 게시글 조회")
     @GetMapping("/{boardIdx}")
-    public BoardDto.BoardDetailResDto boardDetail(@PathVariable("boardIdx") Long boardIdx){
-        return boardService.boardDetail(boardIdx);
+    public BaseResponse<BoardDto.BoardDetailResDto> boardDetail(@PathVariable("boardIdx") Long boardIdx){
+        return BaseResponse.res(true, HttpStatus.OK, "Success", boardService.boardDetail(boardIdx));
     }
     @Operation(summary = "s3 파일 업로드", description = "sort = 'originImage' or 'lutImage' or 'lutFile'")
     @PostMapping("/upload/file/{sort}") // 이미지 Url 반환
