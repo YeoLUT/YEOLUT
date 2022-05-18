@@ -5,20 +5,24 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 import org.springframework.http.HttpStatus;
 
+import java.io.Serializable;
+
 @Data
 @AllArgsConstructor
 @Builder
 @NoArgsConstructor
-public class BaseResponse<T> {
+public class BaseResponse<T> implements Serializable {
+    @Schema(required = true, example = "True")
     @JsonProperty
     private boolean status;
-    @Schema(ref = "결과 코드")
+    @Schema(required = true, example = "OK")
     @JsonProperty
     private HttpStatus code;
+    @Schema(required = true, example = "Success")
     @JsonProperty
     private String message;
-    @Schema(ref = "결과 데이터")
-    @JsonProperty
+    @Schema
+    @JsonProperty("result")
     private T result;
 
     public BaseResponse(boolean status, final HttpStatus code, final String message){
