@@ -1,12 +1,10 @@
 package CvLut.MediaProject.Controller;
 
 import CvLut.MediaProject.Domain.User;
-import CvLut.MediaProject.Dto.ApiCallResponse;
-import CvLut.MediaProject.Dto.BaseResponse;
-import CvLut.MediaProject.Dto.BoardDto;
-import CvLut.MediaProject.Dto.UserRecommendedListDto;
+import CvLut.MediaProject.Dto.*;
 import CvLut.MediaProject.Repository.Board.BoardQueryRepository;
 import CvLut.MediaProject.Repository.UserRepository;
+import CvLut.MediaProject.Service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -28,6 +26,7 @@ import java.util.List;
 @Tag(name = "User", description = "유저 API")
 public class UserController {
     private final UserRepository userRepository;
+    private final UserService userService;
     private final BoardQueryRepository boardQueryRepository;
 //    @PostMapping()
 //    public ResponseEntity<User> saveUser(@Validated @RequestBody User user){
@@ -53,5 +52,10 @@ public class UserController {
     @ApiResponse(responseCode = "200", description = "조회 성공", content = @Content(schema = @Schema(implementation = ApiCallResponse.ApiCallResponseUserBoardList.class)))
     public BaseResponse<List<BoardDto.UserBoardList>> userLikeList(@PathVariable Long userIdx){
         return BaseResponse.res(true, HttpStatus.OK, "Success", boardQueryRepository.UserLikeList(userIdx));
+    }
+
+    public BaseResponse userSignUp(@RequestBody UserDto.UserSignUpReqDto userSignUpReqDto){
+        userService.userSingUp(userSignUpReqDto);
+        return BaseResponse.res(true, HttpStatus.OK, "Success");
     }
 }

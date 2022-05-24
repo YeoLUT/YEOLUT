@@ -47,6 +47,9 @@ dependencies {
 	// s3
 	implementation('org.springframework.cloud:spring-cloud-starter-aws:2.0.1.RELEASE')
 
+	// Spring Security
+	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-security'
+
 }
 // clean task 실행시 QClass 삭제
 clean {
