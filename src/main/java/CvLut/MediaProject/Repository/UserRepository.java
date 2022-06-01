@@ -7,6 +7,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.Optional;
+
 public interface UserRepository extends JpaRepository<User, Long> {
     @Query(value = "SELECT u.user_idx as userIdx, name, profile_image_url as profileImgeUrl, sum(download_count) as downloadCount, count(is_like) as likeCount\n" +
             "FROM user u\n" +
@@ -17,4 +19,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
             "group by b.user_idx\n" +
             "order by sum(download_count) desc", nativeQuery = true)
     Page<UserRecommendedListDto[]> recommendedUserList(Pageable pageable);
+    Optional<User> findByEmail(String email);
 }

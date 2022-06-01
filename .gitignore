@@ -16,8 +16,7 @@ build/
 bin/
 !**/src/main/**/bin/
 !**/src/test/**/bin/
-alqud410.pub
-alqud410
+
 
 ### IntelliJ IDEA ###
 .idea

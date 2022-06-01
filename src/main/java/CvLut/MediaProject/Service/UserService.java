@@ -25,10 +25,9 @@ public class UserService {
         String encodedPassword = passwordEncoder.encode(userSignUpReqDto.getPassword());
         User user = User.builder().name(userSignUpReqDto.getName()).email(userSignUpReqDto.getEmail()).password(encodedPassword)
                 .build();
-        ProfileImage profileImage = ProfileImage.builder().profileImageUrl(userSignUpReqDto.getProfileImageUrl()).build();
-        ProfileImage saveProfileImage = profileImageRepository.save(profileImage);
+        ProfileImage profileImage = profileImageRepository.getById(userSignUpReqDto.getProfileImageIdx());
         User saveUser = userRepository.save(user);
-        UserProfileImage userProfileImage = UserProfileImage.builder().profileImage(saveProfileImage).user(saveUser).build();
+        UserProfileImage userProfileImage = UserProfileImage.builder().profileImage(profileImage).user(saveUser).build();
         userProfileImageRepository.save(userProfileImage);
     }
 }
