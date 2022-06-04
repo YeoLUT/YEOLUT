@@ -1,6 +1,6 @@
 package CvLut.MediaProject.Controller;
 
-import CvLut.MediaProject.Config.JwtTokenProvider;
+//import CvLut.MediaProject.Config.JwtTokenProvider;
 import CvLut.MediaProject.Domain.User;
 import CvLut.MediaProject.Dto.*;
 import CvLut.MediaProject.Repository.Board.BoardQueryRepository;
@@ -31,7 +31,7 @@ public class UserController {
     private final UserService userService;
     private final BoardQueryRepository boardQueryRepository;
     private final PasswordEncoder passwordEncoder;
-    private final JwtTokenProvider jwtTokenProvider;
+//    private final JwtTokenProvider jwtTokenProvider;
 //    @PostMapping()
 //    public ResponseEntity<User> saveUser(@Validated @RequestBody User user){
 //        User savedUser = userRepository.save(user);
@@ -64,12 +64,14 @@ public class UserController {
         userService.userSingUp(userSignUpReqDto);
         return BaseResponse.res(true, HttpStatus.OK, "Success");
     }
-    public BaseResponse<String> userSignIn(@RequestBody UserDto.UserSingInReqDto userSingInReqDto){
-        User user = userRepository.findByEmail(userSingInReqDto.getEmail())
-                .orElseThrow(() -> new IllegalArgumentException("가입되지 않은 E-MAIL 입니다."));
-        if(!passwordEncoder.matches(userSingInReqDto.getPassword(), user.getPassword())){
-            throw new IllegalArgumentException("잘못된 비밀번호입니다. ");
-        }
-        return BaseResponse.res(true, HttpStatus.OK, "Success", jwtTokenProvider.createToken(user.getUsername(), user.getRoles()));
-    }
+//    @Operation(summary = "로그인")
+//    @PostMapping("/signIn")
+//    public BaseResponse<String> userSignIn(@RequestBody UserDto.UserSingInReqDto userSingInReqDto){
+//        User user = userRepository.findByEmail(userSingInReqDto.getEmail())
+//                .orElseThrow(() -> new IllegalArgumentException("가입되지 않은 E-MAIL 입니다."));
+//        if(!passwordEncoder.matches(userSingInReqDto.getPassword(), user.getPassword())){
+//            throw new IllegalArgumentException("잘못된 비밀번호입니다. ");
+//        }
+//        return BaseResponse.res(true, HttpStatus.OK, "Success", jwtTokenProvider.createToken(user.getUsername(), user.getRoles()));
+//    }
 }

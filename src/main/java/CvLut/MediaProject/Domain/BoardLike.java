@@ -21,5 +21,5 @@ public class BoardLike {
     @JoinColumn(name = "boardIdx")
     private Board board;
     @Column
-    private int isLike;
+    private Integer isLike;
 }

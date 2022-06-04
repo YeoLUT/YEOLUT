@@ -11,7 +11,6 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-@Transactional
 public class FeatureService {
 
     private final FeatureQueryRepository featureQueryRepository;
