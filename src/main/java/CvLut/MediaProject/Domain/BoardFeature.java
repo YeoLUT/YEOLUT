@@ -9,7 +9,6 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-@Setter
 public class BoardFeature {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long boardFeatureIdx;

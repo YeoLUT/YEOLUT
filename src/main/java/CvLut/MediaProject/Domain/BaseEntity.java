@@ -14,6 +14,8 @@ import java.time.LocalDateTime;
 @EntityListeners(AuditingEntityListener.class)
 @Getter
 @MappedSuperclass
+// MappedSuperclass -> 실제 Entity가 아닌 일반 클래스를 Entity클래스들이 상속받기 위해 필요하다.
+// Spring Data JPA를 이용한 BaseEntity
 public class BaseEntity {
     @CreatedDate
     @Column(updatable = false)
