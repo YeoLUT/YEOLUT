@@ -1,9 +1,8 @@
 package CvLut.MediaProject.Service;
 
-import CvLut.MediaProject.Repository.FeatureQueryRepository;
+import CvLut.MediaProject.Repository.Feature.FeatureQueryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import CvLut.MediaProject.Dto.FeatureDto;
 
 import java.util.ArrayList;
@@ -15,6 +14,9 @@ public class FeatureService {
 
     private final FeatureQueryRepository featureQueryRepository;
 
+    public List<FeatureDto.ParentFeature> getParentFeatureList(Long featureIdx){
+        return featureQueryRepository.getParentsFeature(featureIdx);
+    }
     public List<FeatureDto.FeatureListRes> getFeatureList(Long featureIdx){
         List<FeatureDto.FeatureListRes> featureListResList = new ArrayList<>();
         List<FeatureDto.ParentFeature> parentFeatureList = featureQueryRepository.getParentsFeature(featureIdx);
@@ -24,4 +26,6 @@ public class FeatureService {
         }
         return featureListResList;
     }
+
+
 }

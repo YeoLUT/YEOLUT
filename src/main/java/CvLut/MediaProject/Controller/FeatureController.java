@@ -1,11 +1,9 @@
 package CvLut.MediaProject.Controller;
 
-import CvLut.MediaProject.Domain.Feature;
 import CvLut.MediaProject.Dto.ApiCallResponse;
 import CvLut.MediaProject.Dto.BaseResponse;
 import CvLut.MediaProject.Dto.FeatureDto;
-import CvLut.MediaProject.Repository.FeatureQueryRepository;
-import CvLut.MediaProject.Repository.FeatureRepositoy;
+import CvLut.MediaProject.Repository.Feature.FeatureQueryRepository;
 import CvLut.MediaProject.Service.FeatureService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -33,5 +31,12 @@ public class FeatureController {
     @ApiResponse(responseCode = "200", description = "조회 성공", content = @Content(schema = @Schema(implementation = ApiCallResponse.ApiCallResponseFeatureList.class)))
     public BaseResponse<List<FeatureDto.FeatureListRes>> getFeatureList(@RequestParam(value = "featureIdx", required = false) Long featureIdx){
         return BaseResponse.res(true, HttpStatus.OK, "Success", featureService.getFeatureList(featureIdx));
+    }
+
+    @Operation(summary = "럿 부모 속성 조회 API", description = "Gamma, Style, Color")
+    @GetMapping("parentFeature")
+    @ApiResponse(responseCode = "200", description = "조회 성공")
+    public BaseResponse<List<FeatureDto.ParentFeature>> getParentFeatureList(@RequestParam(value = "featureIdx", required = false) Long featureIdx){
+        return BaseResponse.res(true, HttpStatus.OK, "Success", featureService.getParentFeatureList(featureIdx));
     }
 }
