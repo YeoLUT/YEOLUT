@@ -1,5 +1,6 @@
 package CvLut.MediaProject.Dto;
 
+import com.querydsl.core.annotations.QueryProjection;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -42,4 +43,25 @@ public class UserDto {
                 message = "'숫자', '문자', '특수문자' 무조건 1개 이상, 비밀번호 '최소 8자에서 최대 16자'까지 허용합니다." )
         private String password;
     }
+
+    @Getter
+    @Setter
+    public static class UserRecommendedListDto {
+        @QueryProjection
+        public UserRecommendedListDto(Long userIdx, String name, String profileImageUrl, Long downloadCount, Long likeCount) {
+            this.userIdx = userIdx;
+            this.name = name;
+            this.profileImageUrl = profileImageUrl;
+            this.downloadCount = downloadCount;
+            this.likeCount = likeCount;
+        }
+
+        Long userIdx;
+        String name;
+        String profileImageUrl;
+        Long downloadCount;
+        Long likeCount;
+
+    }
+
 }

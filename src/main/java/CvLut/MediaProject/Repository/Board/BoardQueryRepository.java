@@ -5,11 +5,7 @@ import CvLut.MediaProject.Dto.BoardDto;
 import CvLut.MediaProject.Dto.QBoardDto_BoardDetailDto;
 import CvLut.MediaProject.Dto.QBoardDto_BoardListDto;
 import CvLut.MediaProject.Dto.QBoardDto_UserBoardList;
-import com.querydsl.core.BooleanBuilder;
-import com.querydsl.core.QueryResults;
-import com.querydsl.core.types.Path;
 import com.querydsl.core.types.dsl.BooleanExpression;
-import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.JPQLQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +17,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 // qclass
 import static CvLut.MediaProject.Domain.QBoard.board;
-import static CvLut.MediaProject.Domain.QFeature.feature;
 import static CvLut.MediaProject.Domain.QUser.user;
 import static CvLut.MediaProject.Domain.QUserProfileImage.userProfileImage;
 import static CvLut.MediaProject.Domain.QProfileImage.profileImage;
@@ -42,7 +37,7 @@ public class BoardQueryRepository {
         return featureIdxList.isEmpty() ? null : boardFeature.feature.featureIdx.in(featureIdxList);
     }
 
-    public Page<BoardDto.BoardListDto> BoardSearch(Pageable pageable, List<Long> featureIdxList, String search){
+    public Page<BoardDto.BoardListDto> boardSearch(Pageable pageable, List<Long> featureIdxList, String search){
 
         List<BoardDto.BoardListDto> results = queryFactory.select(new QBoardDto_BoardListDto(board.boardIdx, board.title, board.downloadCount,
                         board.createdAt, user.userIdx
@@ -62,7 +57,7 @@ public class BoardQueryRepository {
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();
-        JPQLQuery<Board> count = queryFactory.select(board)
+        JPQLQuery<Long> count = queryFactory.select(board.count())
                 .from(board)
                 .leftJoin(board.user, user)
                 .leftJoin(user.userProfileImages,userProfileImage)
@@ -77,7 +72,7 @@ public class BoardQueryRepository {
         return  PageableExecutionUtils.getPage(results, pageable, ()->count.fetchCount());
 
     }
-    public List<BoardDto.BoardDetailDto> BoardInfo(Long boardIdx){
+    public List<BoardDto.BoardDetailDto> boardInfo(Long boardIdx){
         return queryFactory.select(new QBoardDto_BoardDetailDto(board.boardIdx, board.title, board.downloadCount, board.createdAt
                         , board.description, board.source, user.userIdx, user.name, lutImage.lutUrl,
                         profileImage.profileImageUrl,  boardLike.boardLikeIdx.count()))
@@ -91,16 +86,17 @@ public class BoardQueryRepository {
                 .where(board.boardIdx.eq(boardIdx))
                 .fetch();
     }
-    public List<BoardDto.UserBoardList> UserBoardList(Long userIdx){
+
+    public List<BoardDto.UserBoardList> userBoardList(Long userIdx){
         return queryFactory.select(new QBoardDto_UserBoardList(board.boardIdx, board.title, lutImage.lutUrl))
                 .from(board)
                 .leftJoin(board.boardLutImages, boardLutImage)
                 .leftJoin(boardLutImage.lutImage, lutImage)
                 .where(board.user.userIdx.eq(userIdx)).fetch()
                 ;
-
     }
-    public List<BoardDto.UserBoardList> UserLikeList(Long userIdx){
+
+    public List<BoardDto.UserBoardList> userLikeList(Long userIdx){
         return queryFactory
                 .select(new QBoardDto_UserBoardList(board.boardIdx, board.title, lutImage.lutUrl))
                 .from(board)

@@ -1,4 +1,4 @@
-package CvLut.MediaProject.Repository;
+package CvLut.MediaProject.Repository.Feature;
 
 import CvLut.MediaProject.Domain.Feature;
 import CvLut.MediaProject.Dto.FeatureDto;
