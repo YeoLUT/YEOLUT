@@ -6,8 +6,7 @@ import CvLut.MediaProject.Domain.UserProfileImage;
 import CvLut.MediaProject.Dto.UserDto;
 import CvLut.MediaProject.Repository.ProfileImageRepository;
 import CvLut.MediaProject.Repository.UserProfileImageRepository;
-import CvLut.MediaProject.Repository.UserRepository;
-import com.amazonaws.services.ec2.model.UserData;
+import CvLut.MediaProject.Repository.User.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -21,7 +20,7 @@ public class UserService {
     private final ProfileImageRepository profileImageRepository;
     private final PasswordEncoder passwordEncoder;
     @Transactional
-    public void userSingUp(UserDto.UserSignUpReqDto userSignUpReqDto){
+    public User userSingUp(UserDto.UserSignUpReqDto userSignUpReqDto){
         String encodedPassword = passwordEncoder.encode(userSignUpReqDto.getPassword());
         User user = User.builder().name(userSignUpReqDto.getName()).email(userSignUpReqDto.getEmail()).password(encodedPassword)
                 .build();
@@ -29,5 +28,6 @@ public class UserService {
         User saveUser = userRepository.save(user);
         UserProfileImage userProfileImage = UserProfileImage.builder().profileImage(profileImage).user(saveUser).build();
         userProfileImageRepository.save(userProfileImage);
+        return saveUser;
     }
 }

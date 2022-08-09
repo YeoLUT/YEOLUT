@@ -6,6 +6,7 @@ import CvLut.MediaProject.Dto.FeatureDto;
 import CvLut.MediaProject.Repository.*;
 import CvLut.MediaProject.Repository.Board.BoardQueryRepository;
 import CvLut.MediaProject.Repository.Board.BoardRepository;
+import CvLut.MediaProject.Repository.Feature.FeatureQueryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -28,7 +29,7 @@ public class BoardService {
 
     @Transactional
     public BoardDto.BoardDetailResDto boardDetail(Long boardIdx){
-        BoardDto.BoardDetailDto boardDetailDto = boardQueryRepository.BoardInfo(boardIdx).get(0);
+        BoardDto.BoardDetailDto boardDetailDto = boardQueryRepository.boardInfo(boardIdx).get(0);
         List<FeatureDto.DefaultFeature> boardFeatureList = featureQueryRepository.getBoardFeatureList(boardIdx);
 
         Optional<Board> board = boardRepository.findById(boardIdx);
@@ -45,24 +46,29 @@ public class BoardService {
                 .likeCount(boardDetailDto.getLikeCount()).featureList(boardFeatureList).build();
     }
     @Transactional
-    public void insertBoard(BoardDto.UploadBoardReqDto uploadBoardReqDto ){
+    public Board insertBoard(BoardDto.UploadBoardReqDto uploadBoardReqDto ){
         LutImage lutImage = LutImage.builder().lutUrl(uploadBoardReqDto.getLutImageUrl()).build();
+
         OriginImage originImage = OriginImage.builder().originImageUrl(uploadBoardReqDto.getOriginImageUrl()).build();
+
         Board board = Board.builder().title(uploadBoardReqDto.getTitle()).lutFileUrl(uploadBoardReqDto.getLutFileUrl())
                 .source(uploadBoardReqDto.getSource()).description(uploadBoardReqDto.getDescription()).build();
+
         LutImage savedLutImage = lutImageRepository.save(lutImage);
+
         OriginImage savedOriginImage = originImageRepository.save(originImage);
+
         Board savedBoard = boardRepository.save(board);
+
         BoardOriginImage boardOriginImage = BoardOriginImage.builder().originImage(savedOriginImage)
                 .board(savedBoard).build();
+
         BoardLutImage boardLutImage = BoardLutImage.builder().lutImage(savedLutImage)
                 .board(savedBoard).build();
+
         boardLutImageRepository.save(boardLutImage);
         boardOriginImageRepository.save(boardOriginImage);
-
+        return savedBoard;
     }
-//    public BoardDto.s3UploadFileResDto s3Upload(MultipartFile multipartFile, String sort)  throws IOException {
-//        String url = s3Upload.upload(multipartFile, sort);
-//        BoardDto.s3UploadFileResDto s3UploadFileResDto = new BoardDto.s3UploadFileResDto(url);
-//    }
+
 }
