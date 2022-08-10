@@ -7,14 +7,14 @@ import org.springframework.http.HttpStatus;
 
 import java.io.Serializable;
 
-@Data
+
 @AllArgsConstructor
 @Builder
 @NoArgsConstructor
 public class BaseResponse<T> implements Serializable {
     @Schema(required = true, example = "True")
     @JsonProperty
-    private boolean status;
+    private final static boolean status = true;
 
     @Schema(required = true, example = "Success")
     @JsonProperty
@@ -24,8 +24,7 @@ public class BaseResponse<T> implements Serializable {
     private T result;
 
     @Builder
-    public BaseResponse(boolean status, final String message){
-        this.status = status;
+    public BaseResponse(final String message){
         this.message = message;
         this.result = null;
     }
@@ -35,7 +34,6 @@ public class BaseResponse<T> implements Serializable {
     public static <T> BaseResponse<T> res(boolean status, final String message, final T t){
         return BaseResponse.<T>builder()
                 .result(t)
-                .status(status)
                 .message(message)
                 .build();
     }

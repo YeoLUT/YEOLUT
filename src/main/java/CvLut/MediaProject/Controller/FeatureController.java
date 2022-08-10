@@ -32,7 +32,7 @@ public class FeatureController {
     @ApiResponse(responseCode = "200", description = "조회 성공", content = @Content(schema = @Schema(implementation = ApiCallResponse.ApiCallResponseFeatureList.class)))
     public ResponseEntity<BaseResponse<List<FeatureDto.FeatureListRes>>> getFeatureList(@RequestParam(value = "featureIdx", required = false) Long featureIdx){
         List<FeatureDto.FeatureListRes> featureListRes = featureService.getFeatureList(featureIdx);
-        BaseResponse baseResponse = BaseResponse.builder().status(true).message("Success").result(featureListRes).build();
+        BaseResponse baseResponse = BaseResponse.builder().message("Success").result(featureListRes).build();
 
         return ResponseEntity.ok(baseResponse);
     }
@@ -42,7 +42,7 @@ public class FeatureController {
     @ApiResponse(responseCode = "200", description = "조회 성공")
     public ResponseEntity<BaseResponse<List<FeatureDto.ParentFeature>>> getParentFeatureList(@RequestParam(value = "featureIdx", required = false) Long featureIdx){
         List<FeatureDto.ParentFeature> parentFeatures = featureService.getParentFeatureList(featureIdx);
-        BaseResponse baseResponse = BaseResponse.builder().status(true).message("Success").result(parentFeatures).build();
+        BaseResponse baseResponse = BaseResponse.builder().message("Success").result(parentFeatures).build();
         return ResponseEntity.ok(baseResponse);
     }
 }

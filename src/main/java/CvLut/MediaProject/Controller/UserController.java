@@ -48,7 +48,7 @@ public class UserController {
     @GetMapping("/recommend")
     @ApiResponse(responseCode = "200", description = "조회 성공", content = @Content(schema = @Schema(implementation = ApiCallResponse.ApiCallResponseUserRecommendList.class)))
     public ResponseEntity<BaseResponse<Page<UserDto.UserRecommendedListDto>>> recommendedUserList(@PageableDefault(size = 12, sort = "createdAt", direction = Sort.Direction.DESC)Pageable pageable){
-        BaseResponse baseResponse = BaseResponse.builder().status(true).message("Success").result(userQueryRepository.recommendedUserList(pageable)).build();
+        BaseResponse baseResponse = BaseResponse.builder().message("Success").result(userQueryRepository.recommendedUserList(pageable)).build();
         return ResponseEntity.ok(baseResponse);
     }
 
@@ -56,7 +56,7 @@ public class UserController {
     @GetMapping("{userIdx}/boards")
     @ApiResponse(responseCode = "200", description = "조회 성공", content = @Content(schema = @Schema(implementation = ApiCallResponse.ApiCallResponseUserBoardList.class)))
     public ResponseEntity<BaseResponse<List<BoardDto.UserBoardList>>> userBoardList(@PathVariable Long userIdx){
-        BaseResponse baseResponse = BaseResponse.builder().status(true).message("Success").result(boardQueryRepository.userBoardList(userIdx)).build();
+        BaseResponse baseResponse = BaseResponse.builder().message("Success").result(boardQueryRepository.userBoardList(userIdx)).build();
         return ResponseEntity.ok(baseResponse);
     }
 
@@ -64,7 +64,7 @@ public class UserController {
     @GetMapping("{userIdx}/likes")
     @ApiResponse(responseCode = "200", description = "조회 성공", content = @Content(schema = @Schema(implementation = ApiCallResponse.ApiCallResponseUserBoardList.class)))
     public ResponseEntity<BaseResponse<List<BoardDto.UserBoardList>>> userLikeList(@PathVariable Long userIdx){
-        BaseResponse baseResponse = BaseResponse.builder().status(true).message("Success").result(boardQueryRepository.userLikeList(userIdx)).build();
+        BaseResponse baseResponse = BaseResponse.builder().message("Success").result(boardQueryRepository.userLikeList(userIdx)).build();
         return ResponseEntity.ok(baseResponse);
     }
 
@@ -72,7 +72,7 @@ public class UserController {
     @PostMapping("/signUp")
     public ResponseEntity<BaseResponse> userSignUp(@RequestBody UserDto.UserSignUpReqDto userSignUpReqDto){
         User user = userService.userSingUp(userSignUpReqDto);
-        BaseResponse baseResponse = BaseResponse.builder().status(true).message("Success").build();
+        BaseResponse baseResponse = BaseResponse.builder().message("Success").build();
         return ResponseEntity.ok(baseResponse);
     }
 //    @Operation(summary = "로그인")

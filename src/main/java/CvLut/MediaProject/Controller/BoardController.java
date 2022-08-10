@@ -49,7 +49,7 @@ public class BoardController {
             featureIdxList = new ArrayList<>();
         }
         Page<BoardDto.BoardListDto> boardListDtos = boardQueryRepository.boardSearch(pageable, featureIdxList, search);
-        BaseResponse baseResponse = BaseResponse.builder().status(true).message("Success").result(boardListDtos).build();
+        BaseResponse baseResponse = BaseResponse.builder().message("Success").result(boardListDtos).build();
 
         return ResponseEntity.ok(baseResponse);
     }
@@ -58,7 +58,7 @@ public class BoardController {
     @ApiResponse(responseCode = "200", description = "조회 성공", content = @Content(schema = @Schema(implementation = ApiCallResponse.ApiCallResponseBoardDetail.class)))
     public ResponseEntity<BaseResponse<BoardDto.BoardDetailResDto>> boardDetail(@PathVariable("boardIdx") Long boardIdx){
         BoardDto.BoardDetailResDto boardDetailResDto = boardService.boardDetail(boardIdx);
-        BaseResponse baseResponse = BaseResponse.builder().status(true).message("Success").result(boardDetailResDto).build();
+        BaseResponse baseResponse = BaseResponse.builder().message("Success").result(boardDetailResDto).build();
         return ResponseEntity.ok(baseResponse);
     }
     @Operation(summary = "s3 파일 업로드", description = "sort = 'originImage' or 'lutImage' or 'lutFile'")
@@ -69,14 +69,14 @@ public class BoardController {
         String url = s3Upload.upload(multipartFile, sort);
         BoardDto.S3UploadFileResDto s3UploadFileResDto = BoardDto.S3UploadFileResDto.url(url);
 
-        BaseResponse baseResponse = BaseResponse.builder().status(true).message("Success").result(s3UploadFileResDto).build();
+        BaseResponse baseResponse = BaseResponse.builder().message("Success").result(s3UploadFileResDto).build();
         return ResponseEntity.ok(baseResponse);
     }
     @Operation(summary = "게시글 업로드", description = "회원가입 미완료시 body에 userIdx 추가")
     @PostMapping("/upload")
     public ResponseEntity<BaseResponse> boardUpload(@RequestBody BoardDto.UploadBoardReqDto uploadBoardReqDto){
         Board board = boardService.insertBoard(uploadBoardReqDto);
-        BaseResponse baseResponse = BaseResponse.builder().status(true).message("Success").build();
+        BaseResponse baseResponse = BaseResponse.builder().message("Success").build();
         return ResponseEntity.created(URI.create("/Board" + board.getBoardIdx())).body(baseResponse);
     }
 
