@@ -29,7 +29,7 @@ public class UserRepositoryImpl implements UserCustomRepository {
                 .leftJoin(userProfileImage.profileImage, profileImage)
                 .leftJoin(user.boards, board)
                 .leftJoin(board.boardLikes, boardLike)
-                .groupBy(board.user)
+                .groupBy(user.userIdx)
                 .orderBy(board.downloadCount.sum().desc())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
