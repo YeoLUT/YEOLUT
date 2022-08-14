@@ -1,0 +1,73 @@
+plugins {
+	id 'org.springframework.boot' version '2.6.6'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'java'
+}
+
+group = 'CvLut'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation('org.springframgework.boot:spring-boot-starter-jdbc')
+	implementation('org.projectlombok:lombok')
+	implementation('org.springframework.boot:spring-boot-starter-data-rest')
+	implementation group: 'org.springdoc', name: 'springdoc-openapi-ui', version: '1.5.9'
+	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation', version: '2.5.6'
+	annotationProcessor('org.projectlombok:lombok')
+	runtimeOnly('mysql:mysql-connector-java')
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+	// slf4j , logback
+	implementation('org.slf4j:jcl-over-slf4j')
+	implementation('ch.qos.logback:logback-classic')
+
+
+	// Querydsl
+	implementation 'com.querydsl:querydsl-jpa'
+
+	annotationProcessor('org.projectlombok:lombok')
+
+	// Querydsl 쿼리 타입을 생성할 때 사용하는 라이브러리
+	annotationProcessor "com.querydsl:querydsl-apt:${dependencyManagement.importedProperties['querydsl.version']}:jpa"
+	// java.lang.NoClassDefFoundError(javax.annotation.Entity) 발생 대응
+	annotationProcessor "jakarta.persistence:jakarta.persistence-api"
+	// java.lang.NoClassDefFoundError(javax.annotation.Generated) 발생 대응
+	annotationProcessor "jakarta.annotation:jakarta.annotation-api"
+
+	// s3
+	implementation('org.springframework.cloud:spring-cloud-starter-aws:2.0.1.RELEASE')
+
+	// Spring Security
+	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-security'
+
+	// jwt
+	implementation 'io.jsonwebtoken:jjwt:0.9.1'
+
+	// h2
+	runtimeOnly('org.h2database:h2')
+	//implementation('com.h2database:h2')
+
+
+}
+// clean task 실행시 QClass 삭제
+clean {
+	delete file('src/main/generated') // 인텔리제이 Annotation processor 생성물 생성 위치
+}
+// QueryDSL
+//def querydslDir = "$buildDir/generated/querydsl"
+//sourceSets { main.java.srcDir querydslDir }
+//configurations { querydsl.extendsFrom compileClasspath }
+//configurations { querydsl.extendsFrom compileClasspath }
+
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
