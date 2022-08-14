@@ -1,7 +1,7 @@
 package CvLut.MediaProject.repository.user;
 
-import CvLut.MediaProject.Dto.QUserDto_UserRecommendedListDto;
-import CvLut.MediaProject.Dto.UserDto;
+import CvLut.MediaProject.dto.QUserDto_UserRecommendedListDto;
+import CvLut.MediaProject.dto.UserDto;
 import com.querydsl.jpa.JPQLQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
@@ -10,11 +10,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.support.PageableExecutionUtils;
 import org.springframework.stereotype.Repository;
 
-import static CvLut.MediaProject.Domain.QUser.user;
-import static CvLut.MediaProject.Domain.QProfileImage.profileImage;
-import static CvLut.MediaProject.Domain.QUserProfileImage.userProfileImage;
-import static CvLut.MediaProject.Domain.QBoard.board;
-import static CvLut.MediaProject.Domain.QBoardLike.boardLike;
+import static CvLut.MediaProject.domain.QUser.user;
+import static CvLut.MediaProject.domain.QProfileImage.profileImage;
+import static CvLut.MediaProject.domain.QUserProfileImage.userProfileImage;
+import static CvLut.MediaProject.domain.QBoard.board;
+import static CvLut.MediaProject.domain.QBoardLike.boardLike;
 
 import java.util.List;
 

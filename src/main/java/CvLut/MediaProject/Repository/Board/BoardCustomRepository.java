@@ -1,6 +1,6 @@
 package CvLut.MediaProject.repository.board;
 
-import CvLut.MediaProject.Dto.BoardDto;
+import CvLut.MediaProject.dto.BoardDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

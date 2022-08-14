@@ -1,11 +1,9 @@
 package CvLut.MediaProject.service;
 
-import static CvLut.MediaProject.common.ErrorCode.*;
-
-import CvLut.MediaProject.Domain.ProfileImage;
-import CvLut.MediaProject.Domain.User;
-import CvLut.MediaProject.Domain.UserProfileImage;
-import CvLut.MediaProject.Dto.UserDto;
+import CvLut.MediaProject.domain.ProfileImage;
+import CvLut.MediaProject.domain.User;
+import CvLut.MediaProject.domain.UserProfileImage;
+import CvLut.MediaProject.dto.UserDto;
 import CvLut.MediaProject.repository.ProfileImageRepository;
 import CvLut.MediaProject.repository.UserProfileImageRepository;
 import CvLut.MediaProject.repository.user.UserRepository;

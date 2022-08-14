@@ -1,9 +1,9 @@
 package CvLut.MediaProject.repository.board;
 
-import CvLut.MediaProject.Dto.BoardDto;
-import CvLut.MediaProject.Dto.QBoardDto_BoardDetailDto;
-import CvLut.MediaProject.Dto.QBoardDto_BoardListDto;
-import CvLut.MediaProject.Dto.QBoardDto_UserBoardList;
+import CvLut.MediaProject.dto.BoardDto;
+import CvLut.MediaProject.dto.QBoardDto_BoardDetailDto;
+import CvLut.MediaProject.dto.QBoardDto_BoardListDto;
+import CvLut.MediaProject.dto.QBoardDto_UserBoardList;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.JPQLQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -13,17 +13,16 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.support.PageableExecutionUtils;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.EntityManager;
 import java.util.List;
 // qclass
-import static CvLut.MediaProject.Domain.QBoard.board;
-import static CvLut.MediaProject.Domain.QUser.user;
-import static CvLut.MediaProject.Domain.QUserProfileImage.userProfileImage;
-import static CvLut.MediaProject.Domain.QProfileImage.profileImage;
-import static CvLut.MediaProject.Domain.QBoardLutImage.boardLutImage;
-import static CvLut.MediaProject.Domain.QLutImage.lutImage;
-import static CvLut.MediaProject.Domain.QBoardLike.boardLike;
-import static CvLut.MediaProject.Domain.QBoardFeature.boardFeature;
+import static CvLut.MediaProject.domain.QBoard.board;
+import static CvLut.MediaProject.domain.QUser.user;
+import static CvLut.MediaProject.domain.QUserProfileImage.userProfileImage;
+import static CvLut.MediaProject.domain.QProfileImage.profileImage;
+import static CvLut.MediaProject.domain.QBoardLutImage.boardLutImage;
+import static CvLut.MediaProject.domain.QLutImage.lutImage;
+import static CvLut.MediaProject.domain.QBoardLike.boardLike;
+import static CvLut.MediaProject.domain.QBoardFeature.boardFeature;
 import static org.springframework.util.Assert.hasText;
 @Repository
 @RequiredArgsConstructor

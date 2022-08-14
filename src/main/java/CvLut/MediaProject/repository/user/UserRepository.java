@@ -1,6 +1,6 @@
 package CvLut.MediaProject.repository.user;
 
-import CvLut.MediaProject.Domain.User;
+import CvLut.MediaProject.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.query.Param;
 
