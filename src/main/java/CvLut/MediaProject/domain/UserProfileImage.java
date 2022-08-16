@@ -12,9 +12,9 @@ import javax.persistence.*;
 public class UserProfileImage {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userProfileImageIdx;
-    @ManyToOne @JoinColumn(name="userIdx")
+    @ManyToOne
     private User user;
-    @ManyToOne @JoinColumn(name = "profileImageIdx")
+    @ManyToOne
     private  ProfileImage profileImage;
 
 }

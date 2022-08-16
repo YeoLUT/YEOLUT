@@ -33,14 +33,14 @@ public class Board extends BaseEntity {
     @JoinColumn(name = "userIdx")
     private User user;
 
-    @OneToMany(mappedBy = "board")
-    private List<BoardLike> boardLikes = new ArrayList<>();
-    @OneToMany(mappedBy = "board")
-    private List<BoardScrap> boardScraps = new ArrayList<>();
-    @OneToMany(mappedBy = "board")
-    private List<BoardLutImage> boardLutImages = new ArrayList<>();
-    @OneToMany(mappedBy = "board")
-    private List<BoardOriginImage> boardOriginImages = new ArrayList<>();
-    @OneToMany(mappedBy = "board")
-    private List<BoardFeature> boardFeatures = new ArrayList<>();
+//    @OneToMany(mappedBy = "board")
+//    private List<BoardLike> boardLikes = new ArrayList<>();
+//    @OneToMany(mappedBy = "board")
+//    private List<BoardScrap> boardScraps = new ArrayList<>();
+//    @OneToMany(mappedBy = "board")
+//    private List<BoardLutImage> boardLutImages = new ArrayList<>();
+//    @OneToMany(mappedBy = "board")
+//    private List<BoardOriginImage> boardOriginImages = new ArrayList<>();
+//    @OneToMany(mappedBy = "board")
+//    private List<BoardFeature> boardFeatures = new ArrayList<>();
 }

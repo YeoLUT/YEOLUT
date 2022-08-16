@@ -18,6 +18,6 @@ public class OriginImage {
     @Column
     private String originImageUrl;
 
-    @OneToMany(mappedBy = "originImage")
-    private List<BoardOriginImage> boardOriginImages = new ArrayList<>();
+//    @OneToMany(mappedBy = "originImage")
+//    private List<BoardOriginImage> boardOriginImages = new ArrayList<>();
 }

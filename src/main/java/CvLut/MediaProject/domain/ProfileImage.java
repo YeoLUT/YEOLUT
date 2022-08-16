@@ -18,6 +18,6 @@ public class ProfileImage {
     @Column
     private String profileImageUrl;
 
-    @OneToMany(mappedBy = "profileImage")
-    private List<UserProfileImage> userProfileImages = new ArrayList<>();
+//    @OneToMany(mappedBy = "profileImage")
+//    private List<UserProfileImage> userProfileImages = new ArrayList<>();
 }

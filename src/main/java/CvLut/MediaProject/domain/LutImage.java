@@ -17,6 +17,6 @@ public class LutImage {
 
     @Column
     private String lutUrl;
-    @OneToMany(mappedBy = "lutImage")
-    private List<BoardLutImage> boardLutImages = new ArrayList<>();
+//    @OneToMany(mappedBy = "lutImage")
+//    private List<BoardLutImage> boardLutImages = new ArrayList<>();
 }
