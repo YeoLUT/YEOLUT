@@ -45,12 +45,12 @@ public class BoardRepositoryImpl implements BoardCustomRepository {
                         , user.name, lutImage.lutUrl,profileImage.profileImageUrl, boardLike.boardLikeIdx.count()))
                 .from(board)
                 .leftJoin(board.user, user)
-                .leftJoin(user.userProfileImages,userProfileImage)
+                .leftJoin(user,userProfileImage.user)
                 .leftJoin(userProfileImage.profileImage, profileImage)
-                .leftJoin(board.boardLutImages, boardLutImage)
+                .leftJoin(board, boardLutImage.board)
                 .leftJoin(boardLutImage.lutImage, lutImage)
-                .leftJoin(board.boardLikes, boardLike).on(boardLike.isLike.eq(1))
-                .leftJoin(board.boardFeatures, boardFeature)
+                .leftJoin(board, boardLike.board).on(boardLike.isLike.eq(1))
+                .leftJoin(board, boardFeature.board)
                 .where(featureIdxListIn(featureIdxList),
                         searchIn(search))
                 .groupBy(board.boardIdx, boardLike.board.boardIdx, boardLutImage.board.boardIdx)
@@ -61,11 +61,11 @@ public class BoardRepositoryImpl implements BoardCustomRepository {
         JPQLQuery<Long> count = queryFactory.select(board.count())
                 .from(board)
                 .leftJoin(board.user, user)
-                .leftJoin(user.userProfileImages,userProfileImage)
+                .leftJoin(user,userProfileImage.user)
                 .leftJoin(userProfileImage.profileImage, profileImage)
-                .leftJoin(board.boardLutImages, boardLutImage)
+                .leftJoin(board, boardLutImage.board)
                 .leftJoin(boardLutImage.lutImage, lutImage)
-                .leftJoin(board.boardLikes, boardLike).on(boardLike.isLike.eq(1))
+                .leftJoin(board, boardLike.board).on(boardLike.isLike.eq(1))
                 .where(featureIdxListIn(featureIdxList),
                         searchIn(search));
 
@@ -79,11 +79,11 @@ public class BoardRepositoryImpl implements BoardCustomRepository {
                         profileImage.profileImageUrl,  boardLike.boardLikeIdx.count()))
                 .from(board)
                 .leftJoin(board.user, user)
-                .leftJoin(user.userProfileImages,userProfileImage)
+                .leftJoin(user,userProfileImage.user)
                 .leftJoin(userProfileImage.profileImage, profileImage)
-                .leftJoin(board.boardLutImages, boardLutImage)
+                .leftJoin(board, boardLutImage.board)
                 .leftJoin(boardLutImage.lutImage, lutImage)
-                .leftJoin(board.boardLikes, boardLike).on(boardLike.isLike.eq(1))
+                .leftJoin(board, boardLike.board).on(boardLike.isLike.eq(1))
                 .where(board.boardIdx.eq(boardIdx))
                 .fetch();
     }
@@ -91,7 +91,7 @@ public class BoardRepositoryImpl implements BoardCustomRepository {
     public List<BoardDto.UserBoardList> userBoardList(Long userIdx){
         return queryFactory.select(new QBoardDto_UserBoardList(board.boardIdx, board.title, lutImage.lutUrl))
                 .from(board)
-                .leftJoin(board.boardLutImages, boardLutImage)
+                .leftJoin(board, boardLutImage.board)
                 .leftJoin(boardLutImage.lutImage, lutImage)
                 .where(board.user.userIdx.eq(userIdx)).fetch()
                 ;
@@ -101,8 +101,8 @@ public class BoardRepositoryImpl implements BoardCustomRepository {
         return queryFactory
                 .select(new QBoardDto_UserBoardList(board.boardIdx, board.title, lutImage.lutUrl))
                 .from(board)
-                .leftJoin( board.boardLikes, boardLike).on(boardLike.user.userIdx.eq(userIdx), boardLike.isLike.eq(1))
-                .leftJoin(board.boardLutImages, boardLutImage)
+                .leftJoin( board, boardLike.board).on(boardLike.user.userIdx.eq(userIdx), boardLike.isLike.eq(1))
+                .leftJoin(board, boardLutImage.board)
                 .leftJoin(boardLutImage.lutImage, lutImage)
                 .fetch();
     }

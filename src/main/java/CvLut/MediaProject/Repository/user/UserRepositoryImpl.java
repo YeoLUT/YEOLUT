@@ -25,10 +25,10 @@ public class UserRepositoryImpl implements UserCustomRepository {
     public Page<UserDto.UserRecommendedListDto> recommendedUserList(Pageable pageable){
         List<UserDto.UserRecommendedListDto> results = queryFactory.select(new QUserDto_UserRecommendedListDto(user.userIdx, user.name, profileImage.profileImageUrl, board.downloadCount.sum(), boardLike.isLike.count()))
                 .from(user)
-                .leftJoin(user.userProfileImages, userProfileImage)
+                .leftJoin(user, userProfileImage.user)
                 .leftJoin(userProfileImage.profileImage, profileImage)
-                .leftJoin(user.boards, board)
-                .leftJoin(board.boardLikes, boardLike)
+                .leftJoin(user, board.user)
+                .leftJoin(board, boardLike.board)
                 .groupBy(user.userIdx)
                 .orderBy(board.downloadCount.sum().desc())
                 .offset(pageable.getOffset())
@@ -37,10 +37,10 @@ public class UserRepositoryImpl implements UserCustomRepository {
 
         JPQLQuery<Long> count = queryFactory.select(user.userIdx.count())
                 .from(user)
-                .leftJoin(user.userProfileImages, userProfileImage)
+                .leftJoin(user, userProfileImage.user)
                 .leftJoin(userProfileImage.profileImage, profileImage)
-                .leftJoin(user.boards, board)
-                .leftJoin(board.boardLikes, boardLike)
+                .leftJoin(user, board.user)
+                .leftJoin(board, boardLike.board)
                 .groupBy(board.user);
         return PageableExecutionUtils.getPage(results, pageable , () -> count.fetchOne());
     }
