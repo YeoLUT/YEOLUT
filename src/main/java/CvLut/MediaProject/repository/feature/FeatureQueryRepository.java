@@ -6,6 +6,7 @@ import CvLut.MediaProject.dto.QFeatureDto_ParentFeature;
 import CvLut.MediaProject.dto.QFeatureDto_ChildFeature;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -13,9 +14,13 @@ import java.util.List;
 
 import static CvLut.MediaProject.domain.QFeature.feature;
 import static CvLut.MediaProject.domain.QBoardFeature.boardFeature;
-@RequiredArgsConstructor
 @Repository
+@Getter
+@RequiredArgsConstructor
 public class FeatureQueryRepository {
+
+
+
     private final JPAQueryFactory queryFactory;
     public List<FeatureDto.ParentFeature> getParentsFeature(Long featureIdx){
         BooleanBuilder builder = new BooleanBuilder();
@@ -31,6 +36,7 @@ public class FeatureQueryRepository {
                 .where(builder)
                 .fetch();
     }
+
     public List<FeatureDto.ChildFeature> getChildrenFeature(Long parentIdx){
         return queryFactory
                 .select(new QFeatureDto_ChildFeature(feature.featureIdx, feature.featureName))
@@ -39,11 +45,5 @@ public class FeatureQueryRepository {
                 .fetch();
     }
 
-    public List<FeatureDto.DefaultFeature> getBoardFeatureList(Long boardIdx){
-        return queryFactory
-                .select(new QFeatureDto_DefaultFeature(feature.featureIdx, feature.featureName))
-                .from(boardFeature)
-                .leftJoin(boardFeature.feature, feature).on(boardFeature.board.boardIdx.eq(boardIdx))
-                .fetch();
-    }
+
 }

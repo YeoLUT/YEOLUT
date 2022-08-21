@@ -1,9 +1,6 @@
 package CvLut.MediaProject.repository.board;
 
-import CvLut.MediaProject.dto.BoardDto;
-import CvLut.MediaProject.dto.QBoardDto_BoardDetailDto;
-import CvLut.MediaProject.dto.QBoardDto_BoardListDto;
-import CvLut.MediaProject.dto.QBoardDto_UserBoardList;
+import CvLut.MediaProject.dto.*;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.JPQLQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -16,6 +13,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 // qclass
 import static CvLut.MediaProject.domain.QBoard.board;
+import static CvLut.MediaProject.domain.QFeature.feature;
 import static CvLut.MediaProject.domain.QUser.user;
 import static CvLut.MediaProject.domain.QUserProfileImage.userProfileImage;
 import static CvLut.MediaProject.domain.QProfileImage.profileImage;
@@ -44,13 +42,13 @@ public class BoardRepositoryImpl implements BoardCustomRepository {
                         board.createdAt, user.userIdx
                         , user.name, lutImage.lutUrl,profileImage.profileImageUrl, boardLike.boardLikeIdx.count()))
                 .from(board)
-                .leftJoin(board.user, user)
-                .leftJoin(user,userProfileImage.user)
-                .leftJoin(userProfileImage.profileImage, profileImage)
-                .leftJoin(board, boardLutImage.board)
-                .leftJoin(boardLutImage.lutImage, lutImage)
-                .leftJoin(board, boardLike.board).on(boardLike.isLike.eq(1))
-                .leftJoin(board, boardFeature.board)
+                .leftJoin(user).on(board.user.eq(user))
+                .leftJoin(userProfileImage).on(userProfileImage.user.eq(user))
+                .leftJoin(profileImage).on(userProfileImage.profileImage.eq(profileImage))
+                .leftJoin(boardLutImage).on(boardLutImage.board.eq(board))
+                .leftJoin(lutImage).on(boardLutImage.lutImage.eq(lutImage))
+                .leftJoin(boardLike).on(boardLike.isLike.eq(1), boardLike.board.eq(board))
+                .leftJoin(boardFeature).on(boardFeature.board.eq(board))
                 .where(featureIdxListIn(featureIdxList),
                         searchIn(search))
                 .groupBy(board.boardIdx, boardLike.board.boardIdx, boardLutImage.board.boardIdx)
@@ -60,16 +58,17 @@ public class BoardRepositoryImpl implements BoardCustomRepository {
                 .fetch();
         JPQLQuery<Long> count = queryFactory.select(board.count())
                 .from(board)
-                .leftJoin(board.user, user)
-                .leftJoin(user,userProfileImage.user)
-                .leftJoin(userProfileImage.profileImage, profileImage)
-                .leftJoin(board, boardLutImage.board)
-                .leftJoin(boardLutImage.lutImage, lutImage)
-                .leftJoin(board, boardLike.board).on(boardLike.isLike.eq(1))
+                .leftJoin(user).on(board.user.eq(user))
+                .leftJoin(userProfileImage).on(userProfileImage.user.eq(user))
+                .leftJoin(profileImage).on(userProfileImage.profileImage.eq(profileImage))
+                .leftJoin(boardLutImage).on(boardLutImage.board.eq(board))
+                .leftJoin(lutImage).on(boardLutImage.lutImage.eq(lutImage))
+                .leftJoin(boardLike).on(boardLike.isLike.eq(1), boardLike.board.eq(board))
+                .leftJoin(boardFeature).on(boardFeature.board.eq(board))
                 .where(featureIdxListIn(featureIdxList),
                         searchIn(search));
 
-        System.out.println(PageableExecutionUtils.getPage(results, pageable, ()->count.fetchCount()));
+        // System.out.println(PageableExecutionUtils.getPage(results, pageable, ()->count.fetchCount()));
         return  PageableExecutionUtils.getPage(results, pageable, ()->count.fetchCount());
 
     }
@@ -78,12 +77,12 @@ public class BoardRepositoryImpl implements BoardCustomRepository {
                         , board.description, board.source, user.userIdx, user.name, lutImage.lutUrl,
                         profileImage.profileImageUrl,  boardLike.boardLikeIdx.count()))
                 .from(board)
-                .leftJoin(board.user, user)
-                .leftJoin(user,userProfileImage.user)
-                .leftJoin(userProfileImage.profileImage, profileImage)
-                .leftJoin(board, boardLutImage.board)
-                .leftJoin(boardLutImage.lutImage, lutImage)
-                .leftJoin(board, boardLike.board).on(boardLike.isLike.eq(1))
+                .leftJoin(user).on(board.user.eq(user))
+                .leftJoin(userProfileImage).on(userProfileImage.user.eq(user))
+                .leftJoin(profileImage).on(userProfileImage.profileImage.eq(profileImage))
+                .leftJoin(boardLutImage).on(boardLutImage.board.eq(board))
+                .leftJoin(lutImage).on(boardLutImage.lutImage.eq(lutImage))
+                .leftJoin(boardLike).on(boardLike.isLike.eq(1), boardLike.board.eq(board))
                 .where(board.boardIdx.eq(boardIdx))
                 .fetch();
     }
@@ -91,19 +90,30 @@ public class BoardRepositoryImpl implements BoardCustomRepository {
     public List<BoardDto.UserBoardList> userBoardList(Long userIdx){
         return queryFactory.select(new QBoardDto_UserBoardList(board.boardIdx, board.title, lutImage.lutUrl))
                 .from(board)
-                .leftJoin(board, boardLutImage.board)
-                .leftJoin(boardLutImage.lutImage, lutImage)
+                .leftJoin(boardLutImage).on(boardLutImage.board.eq(board))
+                .leftJoin(lutImage).on(lutImage.eq(boardLutImage.lutImage))
                 .where(board.user.userIdx.eq(userIdx)).fetch()
                 ;
     }
 
+    // query 수정
     public List<BoardDto.UserBoardList> userLikeList(Long userIdx){
         return queryFactory
                 .select(new QBoardDto_UserBoardList(board.boardIdx, board.title, lutImage.lutUrl))
-                .from(board)
-                .leftJoin( board, boardLike.board).on(boardLike.user.userIdx.eq(userIdx), boardLike.isLike.eq(1))
-                .leftJoin(board, boardLutImage.board)
-                .leftJoin(boardLutImage.lutImage, lutImage)
+                .from(boardLike)
+                .leftJoin(board).on(board.eq(boardLike.board))
+                .leftJoin(boardLutImage).on(boardLutImage.board.eq(board))
+                .leftJoin(lutImage).on(boardLutImage.lutImage.eq(lutImage))
+                .where(boardLike.user.userIdx.eq(userIdx), boardLike.isLike.eq(1))
+                .fetch();
+    }
+
+    public List<FeatureDto.DefaultFeature> boardFeatureList(Long boardIdx){
+        return queryFactory
+                .select(new QFeatureDto_DefaultFeature(feature.featureIdx, feature.featureName))
+                .from(boardFeature)
+                .leftJoin(feature).on(feature.eq(boardFeature.feature))
+                .where(boardFeature.board.boardIdx.eq(boardIdx))
                 .fetch();
     }
 }
