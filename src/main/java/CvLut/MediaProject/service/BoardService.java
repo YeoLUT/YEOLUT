@@ -4,6 +4,8 @@ import CvLut.MediaProject.domain.*;
 import CvLut.MediaProject.dto.BoardDto;
 import CvLut.MediaProject.dto.FeatureDto;
 import CvLut.MediaProject.repository.*;
+import CvLut.MediaProject.repository.board.BoardLutImageRepository;
+import CvLut.MediaProject.repository.board.BoardOriginImageRepository;
 import CvLut.MediaProject.repository.board.BoardRepository;
 import CvLut.MediaProject.repository.feature.FeatureQueryRepository;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +30,7 @@ public class BoardService {
     @Transactional
     public BoardDto.BoardDetailResDto boardDetail(Long boardIdx){
         BoardDto.BoardDetailDto boardDetailDto = boardRepository.boardInfo(boardIdx).get(0);
-        List<FeatureDto.DefaultFeature> boardFeatureList = featureQueryRepository.getBoardFeatureList(boardIdx);
+        List<FeatureDto.DefaultFeature> boardFeatureList = boardRepository.boardFeatureList(boardIdx);
 
         Optional<Board> board = boardRepository.findById(boardIdx);
         boardRepository.save(board.get());

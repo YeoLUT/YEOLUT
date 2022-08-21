@@ -1,6 +1,7 @@
 package CvLut.MediaProject.repository.board;
 
 import CvLut.MediaProject.dto.BoardDto;
+import CvLut.MediaProject.dto.FeatureDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -12,4 +13,5 @@ public interface BoardCustomRepository {
     public List<BoardDto.UserBoardList> userBoardList(Long userIdx);
     public List<BoardDto.UserBoardList> userLikeList(Long userIdx);
 
+    public List<FeatureDto.DefaultFeature> boardFeatureList(Long boardIdx);
 }
