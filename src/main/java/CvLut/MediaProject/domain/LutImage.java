@@ -15,7 +15,7 @@ public class LutImage {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long LutImageIdx;
 
-    @Column
+    @Column( nullable = false)
     private String lutUrl;
 //    @OneToMany(mappedBy = "lutImage")
 //    private List<BoardLutImage> boardLutImages = new ArrayList<>();

@@ -15,7 +15,7 @@ public class OriginImage {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long originImageIdx;
 
-    @Column
+    @Column( nullable = false)
     private String originImageUrl;
 
 //    @OneToMany(mappedBy = "originImage")

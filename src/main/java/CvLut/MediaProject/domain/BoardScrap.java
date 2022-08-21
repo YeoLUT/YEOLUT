@@ -19,10 +19,10 @@ public class BoardScrap {
     private boolean isScrap;
 
     @ManyToOne
-    @JoinColumn(name = "userIdx")
+    @JoinColumn(name = "userIdx", nullable = false)
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "boardIdx")
+    @JoinColumn(name = "boardIdx", nullable = false)
     private Board board;
 }

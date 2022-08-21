@@ -16,11 +16,11 @@ public class BoardLike {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long boardLikeIdx;
     @ManyToOne()
-    @JoinColumn(name = "userIdx")
+    @JoinColumn(name = "userIdx", nullable = false)
     private User user;
 
     @ManyToOne()
-    @JoinColumn(name = "boardIdx")
+    @JoinColumn(name = "boardIdx", nullable = false)
     private Board board;
     @Column
     private Integer isLike;

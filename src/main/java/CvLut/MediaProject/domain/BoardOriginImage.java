@@ -17,10 +17,10 @@ public class BoardOriginImage<boardOriginImageIdx> {
     private Long boardOriginImageIdx;
 
     @ManyToOne
-    @JoinColumn(name = "boardIdx")
+    @JoinColumn(name = "boardIdx", nullable = false)
     private Board board;
 
     @ManyToOne
-    @JoinColumn(name = "originImageIdx")
+    @JoinColumn(name = "originImageIdx", nullable = false)
     private OriginImage originImage;
 }

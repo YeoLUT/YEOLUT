@@ -14,10 +14,10 @@ public class BoardFeature {
     private Long boardFeatureIdx;
 
     @ManyToOne
-    @JoinColumn(name = "boardIdx")
+    @JoinColumn(name = "boardIdx", nullable = false)
     private Board board;
 
     @ManyToOne
-    @JoinColumn(name = "featureIdx")
+    @JoinColumn(name = "featureIdx", nullable = false)
     private Feature feature;
 }

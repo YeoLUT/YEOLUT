@@ -30,7 +30,7 @@ public class Board extends BaseEntity {
     @Column
     private String description;
     @ManyToOne
-    @JoinColumn(name = "userIdx")
+    @JoinColumn(name = "userIdx", nullable = false)
     private User user;
 
 //    @OneToMany(mappedBy = "board")

@@ -16,9 +16,9 @@ public class BoardLutImage {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long boardLutImageIdx;
     @ManyToOne
-    @JoinColumn(name = "lutImageIdx")
+    @JoinColumn(name = "lutImageIdx", nullable = false)
     private LutImage lutImage;
     @ManyToOne
-    @JoinColumn(name = "boardIdx")
+    @JoinColumn(name = "boardIdx", nullable = false)
     private Board board;
 }

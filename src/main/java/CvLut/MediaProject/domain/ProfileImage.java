@@ -15,7 +15,7 @@ public class ProfileImage {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long profileImageIdx;
 
-    @Column
+    @Column( nullable = false)
     private String profileImageUrl;
 
 //    @OneToMany(mappedBy = "profileImage")
