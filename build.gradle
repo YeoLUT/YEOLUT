@@ -53,7 +53,7 @@ dependencies {
 
 	// h2
 	runtimeOnly('org.h2database:h2')
-	//implementation('com.h2database:h2')
+	implementation('com.h2database:h2')
 
 
 }
